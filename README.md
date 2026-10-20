@@ -63,6 +63,8 @@ src/
   test/renderScreen.tsx          renders the screen against a fresh mock API
 ```
 
+Each component's CSS sits next to it. `styles/` only holds the design tokens and the shared base rules.
+
 The mock is split the same way a real setup would be. The resolvers act as the server: they decide what gets rejected and what gets saved. A custom Apollo link in front of `SchemaLink` acts as the network: it adds the delay, and for "response lost" it lets the request run (so the card is saved) and then throws away the reply. To the client that's indistinguishable from a dropped connection.
 
 ## Cache updates
@@ -121,8 +123,8 @@ I'd expose `PaymentMethodsScreen` from a remote, either through Module Federatio
 
 ## Time spent
 
-About 3 hours, including reading through everything and testing each scenario by hand.
+About 3 hours. The commits cover about 90 minutes of building with AI help; the rest went into reading the code and testing each scenario by hand.
 
 ## AI use
 
-I used Claude Code for most of the implementation: the mock, the components, the tests and a first draft of this README. I settled the design with it before any code was written (the server/network split in the mock, the retry rule, skipping optimistic updates). I checked the output by running the suite, by breaking the retry logic on purpose to make sure the tests catch it, and by going through each scenario in the browser. Forcing a new key on every attempt fails both retry tests, and removing the in-flight guard fails the same-tick test.
+I used Claude Code for most of the implementation: the mock, the components and their styling, the tests and a first draft of this README. I settled the design with it before any code was written (the server/network split in the mock, the retry rule, skipping optimistic updates). I checked the output by running the suite, by breaking the retry logic on purpose to make sure the tests catch it, and by going through each scenario in the browser. Forcing a new key on every attempt fails both retry tests, and removing the in-flight guard fails the same-tick test.
