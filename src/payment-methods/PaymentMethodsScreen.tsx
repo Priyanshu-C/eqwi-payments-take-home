@@ -1,5 +1,5 @@
-import { AddPaymentMethodForm } from './AddPaymentMethodForm'
-import { PaymentMethodList } from './PaymentMethodList'
+import { AddPaymentMethodForm } from './add/AddPaymentMethodForm'
+import { PaymentMethodList } from './list/PaymentMethodList'
 
 export const PaymentMethodsScreen = () => {
   return (

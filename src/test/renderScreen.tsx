@@ -2,7 +2,7 @@ import { ApolloLink } from '@apollo/client'
 import { ApolloProvider } from '@apollo/client/react'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { createApolloClient } from '../apolloClient'
+import { createApolloClient } from '../graphql/client'
 import { createMockApi, type MockApiOptions } from '../mock/mockApi'
 import { PaymentMethodsScreen } from '../payment-methods/PaymentMethodsScreen'
 

@@ -1,7 +1,7 @@
 import { useId, useRef, useState, type FormEvent } from 'react'
-import { CARD_PRESETS } from '../presets'
-import { CardMark } from './CardMark'
-import { cardName, expiry } from './format'
+import { CARD_PRESETS } from '../card/presets'
+import { CardMark } from '../card/CardMark'
+import { cardName, expiry } from '../card/format'
 import { useAddPaymentMethod } from './useAddPaymentMethod'
 import {
   NICKNAME_MAX_LENGTH,

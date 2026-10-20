@@ -1,15 +1,15 @@
+import '@fontsource-variable/inter'
+import '@fontsource-variable/jetbrains-mono'
+import '@fontsource-variable/space-grotesk'
+import './styles/tokens.css'
+import './styles/base.css'
 import { ApolloProvider } from '@apollo/client/react'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
-import { createApolloClient } from './apolloClient'
+import { createApolloClient } from './graphql/client'
 import { createMockApi } from './mock/mockApi'
 import { isScenario } from './mock/scenarios'
-import '@fontsource-variable/inter'
-import '@fontsource-variable/jetbrains-mono'
-import '@fontsource-variable/space-grotesk'
-import './tokens.css'
-import './index.css'
 
 const params = new URLSearchParams(window.location.search)
 const scenario = params.get('scenario')

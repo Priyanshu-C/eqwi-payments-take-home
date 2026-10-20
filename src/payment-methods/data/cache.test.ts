@@ -1,7 +1,7 @@
 import { InMemoryCache } from '@apollo/client'
 import { describe, expect, it } from 'vitest'
-import type { PaymentMethod } from '../graphql/types'
-import { SEED_METHODS } from '../mock/store'
+import type { PaymentMethod } from '../../graphql/types'
+import { SEED_METHODS } from '../../mock/store'
 import { addToCachedList } from './cache'
 import { PAYMENT_METHODS } from './operations'
 

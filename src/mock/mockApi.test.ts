@@ -1,7 +1,7 @@
 import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import { describe, expect, it } from 'vitest'
-import { createApolloClient } from '../apolloClient'
-import { ADD_PAYMENT_METHOD } from '../payment-methods/operations'
+import { createApolloClient } from '../graphql/client'
+import { ADD_PAYMENT_METHOD } from '../payment-methods/data/operations'
 import { createMockApi } from './mockApi'
 
 const input = {

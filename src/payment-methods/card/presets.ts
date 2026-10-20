@@ -1,4 +1,4 @@
-import type { CardBrand } from './graphql/types'
+import type { CardBrand } from '../../graphql/types'
 
 type CardPreset = {
   id: string

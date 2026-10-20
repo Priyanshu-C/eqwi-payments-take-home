@@ -1,4 +1,4 @@
-import { CARD_PRESETS } from '../presets'
+import { CARD_PRESETS } from '../card/presets'
 
 export const NICKNAME_MAX_LENGTH = 40
 

@@ -1,9 +1,12 @@
 import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import { useMutation } from '@apollo/client/react'
 import { useRef } from 'react'
-import type { AddPaymentMethodInput, PaymentMethod } from '../graphql/types'
-import { addToCachedList } from './cache'
-import { ADD_PAYMENT_METHOD, type AddPaymentMethodData } from './operations'
+import type { AddPaymentMethodInput, PaymentMethod } from '../../graphql/types'
+import { addToCachedList } from '../data/cache'
+import {
+  ADD_PAYMENT_METHOD,
+  type AddPaymentMethodData,
+} from '../data/operations'
 
 type AddState =
   | { status: 'idle' }

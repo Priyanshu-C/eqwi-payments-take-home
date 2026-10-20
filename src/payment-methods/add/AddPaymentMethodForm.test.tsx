@@ -1,7 +1,7 @@
 import { screen, waitFor, within } from '@testing-library/react'
 import type { UserEvent } from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
-import { renderScreen } from '../test/renderScreen'
+import { renderScreen } from '../../test/renderScreen'
 
 const savedCards = () =>
   within(screen.getByRole('list', { name: 'Saved cards' })).getAllByRole(

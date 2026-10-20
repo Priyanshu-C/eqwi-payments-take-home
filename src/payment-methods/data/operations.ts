@@ -1,5 +1,5 @@
 import { gql, type TypedDocumentNode } from '@apollo/client'
-import type { AddPaymentMethodInput, PaymentMethod } from '../graphql/types'
+import type { AddPaymentMethodInput, PaymentMethod } from '../../graphql/types'
 
 // Both operations select the same fields, so a method returned by the mutation
 // can be written straight into the cached list.

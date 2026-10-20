@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client/react'
 import { useId } from 'react'
-import { CardMark } from './CardMark'
-import { cardName, expiry } from './format'
-import { PAYMENT_METHODS } from './operations'
+import { CardMark } from '../card/CardMark'
+import { cardName, expiry } from '../card/format'
+import { PAYMENT_METHODS } from '../data/operations'
 
 export const PaymentMethodList = () => {
   const { data, loading, error, refetch } = useQuery(PAYMENT_METHODS)

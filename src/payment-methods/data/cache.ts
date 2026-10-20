@@ -1,5 +1,5 @@
 import type { ApolloCache } from '@apollo/client'
-import type { PaymentMethod } from '../graphql/types'
+import type { PaymentMethod } from '../../graphql/types'
 import { PAYMENT_METHODS } from './operations'
 
 // Appends instead of refetching the list. The id check means a response that

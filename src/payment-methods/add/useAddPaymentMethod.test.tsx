@@ -4,7 +4,7 @@ import { act, renderHook } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { of } from 'rxjs'
 import { describe, expect, it } from 'vitest'
-import { createTestClient } from '../test/renderScreen'
+import { createTestClient } from '../../test/renderScreen'
 import { useAddPaymentMethod } from './useAddPaymentMethod'
 
 const renderAddHook = (client: ApolloClient) =>

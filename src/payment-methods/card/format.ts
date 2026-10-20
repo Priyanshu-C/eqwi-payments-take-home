@@ -1,4 +1,4 @@
-import type { CardBrand, PaymentMethod } from '../graphql/types'
+import type { CardBrand, PaymentMethod } from '../../graphql/types'
 
 const BRAND_NAMES: Record<CardBrand, string> = {
   VISA: 'Visa',

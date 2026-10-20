@@ -1,4 +1,4 @@
-import type { CardBrand } from '../graphql/types'
+import type { CardBrand } from '../../graphql/types'
 
 const MARKS: Record<CardBrand, string> = {
   VISA: 'VISA',
