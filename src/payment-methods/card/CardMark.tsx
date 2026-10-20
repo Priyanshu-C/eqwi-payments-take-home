@@ -1,4 +1,5 @@
 import type { CardBrand } from '../../graphql/types'
+import './CardMark.css'
 
 const MARKS: Record<CardBrand, string> = {
   VISA: 'VISA',

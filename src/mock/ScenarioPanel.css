@@ -1,0 +1,121 @@
+.mock-band {
+  margin-top: auto;
+  color: var(--color-graphite-ink);
+  background: var(--color-graphite);
+  border-top: 1px solid var(--color-graphite-rule);
+}
+
+.mock-band :focus-visible {
+  outline-color: var(--color-graphite-accent);
+}
+
+.mock-band .label {
+  color: var(--color-graphite-muted);
+}
+
+.mock-band a {
+  color: var(--color-graphite-accent);
+  white-space: nowrap;
+}
+
+.mock-inner {
+  display: grid;
+  grid-template-areas: 'head' 'scenarios' 'readout' 'foot';
+  gap: var(--space-md);
+  width: min(100%, 64rem);
+  margin-inline: auto;
+  padding: var(--space-lg) var(--space-sm);
+}
+
+.mock-head {
+  display: grid;
+  grid-area: head;
+  gap: var(--space-3xs);
+}
+
+.mock-head h2.label {
+  color: var(--color-graphite-accent);
+}
+
+.mock-head p,
+.mock-foot {
+  color: var(--color-graphite-muted);
+  font-size: var(--text-sm);
+}
+
+.mock-scenarios {
+  display: grid;
+  grid-area: scenarios;
+  gap: var(--space-2xs);
+}
+
+.mock-scenarios legend {
+  margin-bottom: var(--space-2xs);
+}
+
+.mock-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-2xs) var(--space-xs);
+  border: 1px solid var(--color-graphite-rule);
+  border-radius: var(--radius-control);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.mock-option:has(input:checked) {
+  background: var(--color-graphite-2);
+  border-color: var(--color-graphite-accent);
+}
+
+.mock-option input {
+  margin: 0;
+  accent-color: var(--color-graphite-accent);
+}
+
+.mock-readout {
+  display: grid;
+  grid-area: readout;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: var(--space-2xs);
+}
+
+.mock-readout > div {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: var(--space-2xs);
+  padding: var(--space-sm);
+  border: 1px solid var(--color-graphite-rule);
+  border-radius: var(--radius-control);
+}
+
+.mock-readout dd {
+  font-family: var(--font-mono);
+  font-size: var(--text-readout);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.mock-foot {
+  grid-area: foot;
+  font-size: var(--text-xs);
+}
+
+@media (min-width: 52rem) {
+  .mock-inner {
+    grid-template-areas:
+      'head head'
+      'scenarios readout'
+      'foot foot';
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: var(--space-xl);
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .mock-readout {
+    padding-top: calc(var(--text-2xs) * 1.55 + var(--space-2xs));
+  }
+}

@@ -1,0 +1,19 @@
+.card-mark {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 1.625rem;
+  color: var(--color-graphite-ink);
+  background: var(--color-graphite);
+  border-radius: var(--radius-mark);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.card-mark-empty {
+  background: transparent;
+  border: 1px dashed var(--color-rule-2);
+}

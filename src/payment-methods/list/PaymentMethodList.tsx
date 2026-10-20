@@ -1,8 +1,10 @@
 import { useQuery } from '@apollo/client/react'
 import { useId } from 'react'
+import { CardExpiry } from '../card/CardExpiry'
 import { CardMark } from '../card/CardMark'
-import { cardName, expiry } from '../card/format'
+import { cardName } from '../card/format'
 import { PAYMENT_METHODS } from '../data/operations'
+import './PaymentMethodList.css'
 
 export const PaymentMethodList = () => {
   const { data, loading, error, refetch } = useQuery(PAYMENT_METHODS)
@@ -54,9 +56,7 @@ export const PaymentMethodList = () => {
             <CardMark brand={method.brand} />
             <span className="method-nickname">{method.nickname}</span>
             <span className="method-card">{cardName(method)}</span>
-            <span className="expiry">
-              <span className="expiry-label">Expires</span> {expiry(method)}
-            </span>
+            <CardExpiry card={method} />
           </li>
         ))}
       </ul>

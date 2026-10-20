@@ -18,7 +18,7 @@ npm run lint
 
 ## Mock scenarios
 
-Under the screen there's a dashed **Mock API** panel. The scenario you pick applies to every request until you change it, and it's copied into the URL as `?scenario=`, so you can reload with it. Every response takes 700 ms so the pending states are visible. Reloading the page resets the store.
+At the bottom of the page there's a dark **Mock API** panel. The scenario you pick applies to every request until you change it, and it's copied into the URL as `?scenario=`, so you can reload with it. Every response takes 700 ms so the pending states are visible. Reloading the page resets the store.
 
 The panel also shows how many cards and idempotency keys the mock server has. That's the easiest way to check that a retry didn't save a second card.
 
@@ -36,27 +36,30 @@ In the lost-response scenario you can also press Retry while it's still selected
 
 ```
 src/
-  main.tsx                     reads ?scenario= / ?seed=, creates the mock and client
-  apolloClient.ts
-  presets.ts                   the fake cards you can add
+  main.tsx                       reads ?scenario= / ?seed=, creates the mock and client
+  App.tsx
+  styles/                        design tokens and base styles
   graphql/
-    schema.graphql             the schema (also what the mock executes)
-    types.ts                   handwritten types matching the schema
+    schema.graphql               the schema (also what the mock executes)
+    types.ts                     handwritten types matching the schema
+    client.ts                    Apollo client and cache
   mock/
-    store.ts                   in-memory "server": cards and idempotency records
-    mockApi.ts                 resolvers + a link that adds latency / drops replies
+    store.ts                     in-memory "server": cards and idempotency records
+    mockApi.ts                   resolvers + a link that adds latency / drops replies
     scenarios.ts
-    ScenarioPanel.tsx          reviewer controls
+    ScenarioPanel.tsx            reviewer controls
   payment-methods/
     PaymentMethodsScreen.tsx
-    PaymentMethodList.tsx      loading / error / empty / list
-    AddPaymentMethodForm.tsx   form, validation display, status messages
-    useAddPaymentMethod.ts     idempotency key and retry handling
-    cache.ts                   cache update after a successful add
-    operations.ts              typed query and mutation (TypedDocumentNode)
-    validation.ts
-    format.ts
-  test/renderScreen.tsx        renders the screen against a fresh mock API
+    list/PaymentMethodList.tsx   loading / error / empty / list
+    add/
+      AddPaymentMethodForm.tsx   form, validation display, status messages
+      useAddPaymentMethod.ts     idempotency key and retry handling
+      validation.ts
+    data/
+      operations.ts              typed query and mutation (TypedDocumentNode)
+      cache.ts                   cache update after a successful add
+    card/                        presets, brand tile, expiry, formatting
+  test/renderScreen.tsx          renders the screen against a fresh mock API
 ```
 
 The mock is split the same way a real setup would be. The resolvers act as the server: they decide what gets rejected and what gets saved. A custom Apollo link in front of `SchemaLink` acts as the network: it adds the delay, and for "response lost" it lets the request run (so the card is saved) and then throws away the reply. To the client that's indistinguishable from a dropped connection.

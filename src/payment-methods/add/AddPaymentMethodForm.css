@@ -1,0 +1,133 @@
+.pane-add {
+  background: var(--color-paper-2);
+}
+
+form {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.cards {
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.cards legend {
+  margin-bottom: var(--space-2xs);
+}
+
+.card-option {
+  display: grid;
+  grid-template-areas:
+    'radio mark name'
+    'radio mark expiry';
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--space-xs);
+  padding: var(--space-xs);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-control);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.card-option:hover {
+  border-color: var(--color-rule-2);
+}
+
+.card-option:has(input:checked) {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+}
+
+.card-option:has(input[aria-disabled='true']) {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.card-option input {
+  grid-area: radio;
+  margin: 0;
+  accent-color: var(--color-accent);
+}
+
+.card-option .card-mark {
+  grid-area: mark;
+}
+
+.option-name {
+  grid-area: name;
+  font-weight: 500;
+}
+
+.card-option .expiry {
+  grid-area: expiry;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.field input {
+  padding: 0.625rem var(--space-xs);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule-2);
+  border-radius: var(--radius-control);
+}
+
+.field input:hover {
+  border-color: var(--color-muted);
+}
+
+.field input:focus-visible {
+  border-color: var(--color-focus);
+  outline-offset: 1px;
+}
+
+.field input[aria-invalid='true'] {
+  border-color: var(--color-error);
+}
+
+.field input:read-only {
+  color: var(--color-muted);
+  background: var(--color-paper-2);
+}
+
+.hint {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.counter {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.counter.over,
+.field-error {
+  color: var(--color-error);
+}
+
+.field-error {
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-sm);
+}
+
+.row .status {
+  color: var(--color-ink-2);
+  font-size: var(--text-sm);
+}

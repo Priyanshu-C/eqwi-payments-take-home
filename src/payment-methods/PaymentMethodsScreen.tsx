@@ -1,5 +1,6 @@
 import { AddPaymentMethodForm } from './add/AddPaymentMethodForm'
 import { PaymentMethodList } from './list/PaymentMethodList'
+import './PaymentMethodsScreen.css'
 
 export const PaymentMethodsScreen = () => {
   return (

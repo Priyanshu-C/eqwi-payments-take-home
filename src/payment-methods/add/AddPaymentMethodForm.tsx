@@ -1,7 +1,8 @@
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { CARD_PRESETS } from '../card/presets'
+import { CardExpiry } from '../card/CardExpiry'
 import { CardMark } from '../card/CardMark'
-import { cardName, expiry } from '../card/format'
+import { cardName } from '../card/format'
 import { useAddPaymentMethod } from './useAddPaymentMethod'
 import {
   NICKNAME_MAX_LENGTH,
@@ -9,6 +10,7 @@ import {
   type AddFormErrors,
   type AddFormValues,
 } from './validation'
+import './AddPaymentMethodForm.css'
 
 const EMPTY: AddFormValues = { presetId: '', nickname: '' }
 
@@ -86,9 +88,7 @@ export const AddPaymentMethodForm = () => {
               />
               <CardMark brand={preset.brand} />
               <span className="option-name">{cardName(preset)}</span>
-              <span className="expiry">
-                <span className="expiry-label">Expires</span> {expiry(preset)}
-              </span>
+              <CardExpiry card={preset} />
             </label>
           ))}
           {errors.presetId && (

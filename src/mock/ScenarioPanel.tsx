@@ -1,6 +1,7 @@
 import { useId, useState, useSyncExternalStore } from 'react'
 import type { MockApi } from './mockApi'
 import { SCENARIOS, type Scenario } from './scenarios'
+import './ScenarioPanel.css'
 
 type Props = { api: MockApi }
 
