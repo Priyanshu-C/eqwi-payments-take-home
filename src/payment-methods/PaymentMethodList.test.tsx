@@ -21,16 +21,14 @@ describe('saved cards list', () => {
   it('shows the empty state when there are no cards', async () => {
     renderScreen({ seed: [] })
 
-    expect(
-      await screen.findByText('No saved cards yet. Add one below.'),
-    ).toBeInTheDocument()
+    expect(await screen.findByText('No saved cards yet.')).toBeInTheDocument()
   })
 
   it('recovers from a failed load when the user retries', async () => {
     const { api, sent, user } = renderScreen({ scenario: 'list-error' })
 
     const alert = await screen.findByRole('alert')
-    expect(alert).toHaveTextContent("We couldn't load your payment methods.")
+    expect(alert).toHaveTextContent('We couldn’t load your payment methods.')
 
     api.setScenario('normal')
     await user.click(within(alert).getByRole('button', { name: 'Try again' }))

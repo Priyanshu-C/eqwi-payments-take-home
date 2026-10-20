@@ -6,7 +6,7 @@ type Props = { api: MockApi }
 
 const App = ({ api }: Props) => {
   return (
-    <div className="layout">
+    <div className="app">
       <PaymentMethodsScreen />
       <ScenarioPanel api={api} />
     </div>

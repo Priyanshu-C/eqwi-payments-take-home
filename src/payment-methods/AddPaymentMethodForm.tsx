@@ -1,5 +1,6 @@
 import { useId, useRef, useState, type FormEvent } from 'react'
 import { CARD_PRESETS } from '../presets'
+import { CardMark } from './CardMark'
 import { cardName, expiry } from './format'
 import { useAddPaymentMethod } from './useAddPaymentMethod'
 import {
@@ -62,11 +63,13 @@ export const AddPaymentMethodForm = () => {
     .join(' ')
 
   return (
-    <section aria-labelledby={`${id}-heading`} className="add">
-      <h2 id={`${id}-heading`}>Add a card</h2>
+    <section aria-labelledby={`${id}-heading`} className="pane pane-add">
+      <div className="pane-head">
+        <h2 id={`${id}-heading`}>Add a card</h2>
+      </div>
       <form onSubmit={handleSubmit} noValidate>
         <fieldset ref={cardsRef} className="cards">
-          <legend>Card</legend>
+          <legend className="label">Card</legend>
           {CARD_PRESETS.map((preset) => (
             <label key={preset.id} className="card-option">
               <input
@@ -81,8 +84,11 @@ export const AddPaymentMethodForm = () => {
                   errors.presetId ? `${id}-card-error` : undefined
                 }
               />
-              <span>{cardName(preset)}</span>
-              <span className="muted">Expires {expiry(preset)}</span>
+              <CardMark brand={preset.brand} />
+              <span className="option-name">{cardName(preset)}</span>
+              <span className="expiry">
+                <span className="expiry-label">Expires</span> {expiry(preset)}
+              </span>
             </label>
           ))}
           {errors.presetId && (
@@ -93,7 +99,9 @@ export const AddPaymentMethodForm = () => {
         </fieldset>
 
         <div className="field">
-          <label htmlFor={`${id}-nickname`}>Nickname</label>
+          <label htmlFor={`${id}-nickname`} className="label">
+            Nickname
+          </label>
           <input
             ref={nicknameRef}
             id={`${id}-nickname`}
@@ -104,11 +112,15 @@ export const AddPaymentMethodForm = () => {
             aria-invalid={errors.nickname ? true : undefined}
             aria-describedby={nicknameDescription}
           />
-          <p id={`${id}-nickname-hint`} className="muted">
+          <p id={`${id}-nickname-hint`} className="hint">
             Up to {NICKNAME_MAX_LENGTH} characters.{' '}
             <span
               aria-hidden="true"
-              className={nicknameLength > NICKNAME_MAX_LENGTH ? 'over' : ''}
+              className={
+                nicknameLength > NICKNAME_MAX_LENGTH
+                  ? 'counter over'
+                  : 'counter'
+              }
             >
               {nicknameLength}/{NICKNAME_MAX_LENGTH}
             </span>
@@ -122,23 +134,30 @@ export const AddPaymentMethodForm = () => {
 
         {state.status === 'rejected' && (
           <div role="alert" className="notice notice-error">
+            <span className="chip">Not saved</span>
             <p>{state.message} Nothing was saved, so you can try again.</p>
           </div>
         )}
         {state.status === 'unknown' && (
           <div role="alert" className="notice notice-warning">
+            <span className="chip">No response</span>
             <p>
-              <strong>We couldn't confirm whether the card was saved.</strong>
+              <strong>We couldn’t confirm whether the card was saved.</strong>
             </p>
             <p>
-              Retrying is safe: it resends the same request, so the card won't
+              Retrying is safe: it resends the same request, so the card won’t
               be added twice. The details are locked until the server answers.
             </p>
           </div>
         )}
 
         <div className="row">
-          <button type="submit" aria-disabled={pending || undefined}>
+          <button
+            type="submit"
+            className="button-primary"
+            aria-disabled={pending || undefined}
+          >
+            {pending && <span className="spinner" aria-hidden="true" />}
             {pending
               ? 'Adding…'
               : state.status === 'unknown'
@@ -146,7 +165,8 @@ export const AddPaymentMethodForm = () => {
                 : 'Add card'}
           </button>
           <p role="status" className="status">
-            {pending && 'Adding card…'}
+            {/* The button already says "Adding…"; this is for screen readers. */}
+            {pending && <span className="visually-hidden">Adding card…</span>}
             {state.status === 'saved' &&
               `Added ${state.method.nickname} (${cardName(state.method)}).`}
           </p>

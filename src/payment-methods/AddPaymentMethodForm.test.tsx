@@ -125,7 +125,7 @@ describe('adding a payment method', () => {
     await user.click(screen.getByRole('button', { name: 'Add card' }))
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
-      "We couldn't confirm whether the card was saved.",
+      'We couldn’t confirm whether the card was saved.',
     )
     // The server saved it; the client just never heard back.
     expect(api.store.list()).toHaveLength(3)
@@ -195,12 +195,12 @@ describe('adding a payment method', () => {
 
   it('does not duplicate the card when the list reloads before the retry', async () => {
     const { api, user } = renderScreen({ scenario: 'list-error' })
-    await screen.findByText("We couldn't load your payment methods.")
+    await screen.findByText('We couldn’t load your payment methods.')
 
     api.setScenario('add-response-lost')
     await fillForm(user)
     await user.click(screen.getByRole('button', { name: 'Add card' }))
-    await screen.findByText("We couldn't confirm whether the card was saved.")
+    await screen.findByText('We couldn’t confirm whether the card was saved.')
 
     // The reloaded list already contains the saved card, so the replayed
     // response from the retry has to be ignored by the cache update.

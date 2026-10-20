@@ -4,9 +4,14 @@ import { PaymentMethodList } from './PaymentMethodList'
 export const PaymentMethodsScreen = () => {
   return (
     <main className="screen">
-      <h1>Payment methods</h1>
-      <PaymentMethodList />
-      <AddPaymentMethodForm />
+      <header className="screen-head">
+        <h1>Payment methods</h1>
+        <p className="lede">Cards saved to your account.</p>
+      </header>
+      <div className="sheet">
+        <PaymentMethodList />
+        <AddPaymentMethodForm />
+      </div>
     </main>
   )
 }

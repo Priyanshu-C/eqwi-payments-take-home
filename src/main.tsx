@@ -5,6 +5,10 @@ import App from './App'
 import { createApolloClient } from './apolloClient'
 import { createMockApi } from './mock/mockApi'
 import { isScenario } from './mock/scenarios'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/jetbrains-mono'
+import '@fontsource-variable/space-grotesk'
+import './tokens.css'
 import './index.css'
 
 const params = new URLSearchParams(window.location.search)
