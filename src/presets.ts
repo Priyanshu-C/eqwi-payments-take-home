@@ -1,6 +1,6 @@
 import type { CardBrand } from './graphql/types'
 
-export type CardPreset = {
+type CardPreset = {
   id: string
   brand: CardBrand
   last4: string

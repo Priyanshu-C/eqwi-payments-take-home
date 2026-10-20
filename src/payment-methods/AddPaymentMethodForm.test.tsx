@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import type { UserEvent } from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { renderScreen } from '../test/renderScreen'
@@ -10,8 +10,13 @@ const savedCards = () =>
 
 const nicknameInput = () => screen.getByRole('textbox', { name: 'Nickname' })
 
+const formStatus = () =>
+  within(screen.getByRole('region', { name: 'Add a card' })).getByRole('status')
+
+const visaRadio = () => screen.getByRole('radio', { name: /Visa ending 4242/ })
+
 const fillForm = async (user: UserEvent, nickname = 'Travel') => {
-  await user.click(screen.getByRole('radio', { name: /Visa ending 4242/ }))
+  await user.click(visaRadio())
   await user.clear(nicknameInput())
   await user.type(nicknameInput(), nickname)
 }
@@ -34,9 +39,8 @@ describe('adding a payment method', () => {
       expect.stringContaining('Enter a nickname.'),
     )
     expect(nicknameInput()).toHaveAttribute('aria-invalid', 'true')
-    expect(
-      screen.getByRole('radio', { name: /Visa ending 4242/ }),
-    ).toHaveFocus()
+    expect(visaRadio()).toHaveFocus()
+    expect(visaRadio()).toHaveAccessibleDescription('Choose a card.')
     expect(sent('AddPaymentMethod')).toHaveLength(0)
   })
 
@@ -49,12 +53,14 @@ describe('adding a payment method', () => {
     await user.dblClick(submit)
 
     expect(submit).toHaveAttribute('aria-disabled', 'true')
-    expect(screen.getByText('Adding card…')).toBeInTheDocument()
+    expect(formStatus()).toHaveTextContent('Adding card…')
     expect(nicknameInput()).toHaveAttribute('readonly')
 
-    expect(
-      await screen.findByText('Added Travel (Visa ending 4242).'),
-    ).toBeInTheDocument()
+    await waitFor(() =>
+      expect(formStatus()).toHaveTextContent(
+        'Added Travel (Visa ending 4242).',
+      ),
+    )
     expect(savedCards()).toHaveLength(3)
     expect(savedCards()[2]).toHaveTextContent('Travel')
     expect(api.store.list()).toHaveLength(3)
@@ -76,9 +82,7 @@ describe('adding a payment method', () => {
       'The card processor is down. Nothing was saved, so you can try again.',
     )
     expect(nicknameInput()).toHaveValue('Travel')
-    expect(
-      screen.getByRole('radio', { name: /Visa ending 4242/ }),
-    ).toBeChecked()
+    expect(visaRadio()).toBeChecked()
     expect(api.store.list()).toHaveLength(2)
 
     api.setScenario('normal')
@@ -130,6 +134,8 @@ describe('adding a payment method', () => {
     // Locked to what was sent, so the retry can reuse the key.
     await user.type(nicknameInput(), ' edited')
     expect(nicknameInput()).toHaveValue('Travel')
+    await user.click(screen.getByRole('radio', { name: /Mastercard/ }))
+    expect(visaRadio()).toBeChecked()
 
     // The retry is lost too. The server replays, it doesn't save again.
     await user.click(screen.getByRole('button', { name: 'Retry' }))
@@ -167,5 +173,48 @@ describe('adding a payment method', () => {
     expect(second).not.toBe(first)
     expect(api.store.list()).toHaveLength(4)
     expect(savedCards()).toHaveLength(4)
+  })
+
+  it('answers a retry from the stored result even while adds are rejected', async () => {
+    const { api, user } = renderScreen({ scenario: 'add-response-lost' })
+    await screen.findByText('Personal')
+    await fillForm(user)
+    await user.click(screen.getByRole('button', { name: 'Add card' }))
+    await screen.findByRole('alert')
+
+    // The processor is down for new adds, but this key was already saved.
+    api.setScenario('add-rejected')
+    await user.click(screen.getByRole('button', { name: 'Retry' }))
+
+    expect(
+      await screen.findByText('Added Travel (Visa ending 4242).'),
+    ).toBeInTheDocument()
+    expect(api.store.list()).toHaveLength(3)
+    expect(savedCards()).toHaveLength(3)
+  })
+
+  it('does not duplicate the card when the list reloads before the retry', async () => {
+    const { api, user } = renderScreen({ scenario: 'list-error' })
+    await screen.findByText("We couldn't load your payment methods.")
+
+    api.setScenario('add-response-lost')
+    await fillForm(user)
+    await user.click(screen.getByRole('button', { name: 'Add card' }))
+    await screen.findByText("We couldn't confirm whether the card was saved.")
+
+    // The reloaded list already contains the saved card, so the replayed
+    // response from the retry has to be ignored by the cache update.
+    api.setScenario('normal')
+    await user.click(screen.getByRole('button', { name: 'Try again' }))
+    await screen.findByText('Personal')
+    expect(savedCards()).toHaveLength(3)
+
+    await user.click(screen.getByRole('button', { name: 'Retry' }))
+
+    expect(
+      await screen.findByText('Added Travel (Visa ending 4242).'),
+    ).toBeInTheDocument()
+    expect(savedCards()).toHaveLength(3)
+    expect(api.store.list()).toHaveLength(3)
   })
 })

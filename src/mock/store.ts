@@ -1,8 +1,7 @@
 import { GraphQLError } from 'graphql'
 import type { AddPaymentMethodInput, PaymentMethod } from '../graphql/types'
+import { NICKNAME_MAX_LENGTH } from '../payment-methods/validation'
 import { CARD_PRESETS } from '../presets'
-
-const NICKNAME_MAX_LENGTH = 40
 
 export const SEED_METHODS: PaymentMethod[] = [
   {
@@ -31,8 +30,6 @@ type SavedResult = {
 
 export const apiError = (code: string, message: string) =>
   new GraphQLError(message, { extensions: { code } })
-
-export type MockStore = ReturnType<typeof createMockStore>
 
 export const createMockStore = (seed: PaymentMethod[] = SEED_METHODS) => {
   const methods = [...seed]

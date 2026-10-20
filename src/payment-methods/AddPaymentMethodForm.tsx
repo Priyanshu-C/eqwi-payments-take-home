@@ -65,11 +65,7 @@ export const AddPaymentMethodForm = () => {
     <section aria-labelledby={`${id}-heading`} className="add">
       <h2 id={`${id}-heading`}>Add a card</h2>
       <form onSubmit={handleSubmit} noValidate>
-        <fieldset
-          ref={cardsRef}
-          className="cards"
-          aria-describedby={errors.presetId ? `${id}-card-error` : undefined}
-        >
+        <fieldset ref={cardsRef} className="cards">
           <legend>Card</legend>
           {CARD_PRESETS.map((preset) => (
             <label key={preset.id} className="card-option">
@@ -80,6 +76,10 @@ export const AddPaymentMethodForm = () => {
                 checked={values.presetId === preset.id}
                 onChange={() => update('presetId', preset.id)}
                 aria-disabled={locked || undefined}
+                aria-invalid={errors.presetId ? true : undefined}
+                aria-describedby={
+                  errors.presetId ? `${id}-card-error` : undefined
+                }
               />
               <span>{cardName(preset)}</span>
               <span className="muted">Expires {expiry(preset)}</span>
@@ -132,7 +132,7 @@ export const AddPaymentMethodForm = () => {
             </p>
             <p>
               Retrying is safe: it resends the same request, so the card won't
-              be added twice. The details are locked until it goes through.
+              be added twice. The details are locked until the server answers.
             </p>
           </div>
         )}

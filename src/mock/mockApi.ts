@@ -65,6 +65,7 @@ export const createMockApi = ({
       new SchemaLink({ schema, rootValue, validate: true }),
     ]),
     store,
+    delayMs,
     getScenario: () => current,
     setScenario: (next: Scenario) => {
       current = next

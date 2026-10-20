@@ -43,7 +43,7 @@ export const ScenarioPanel = ({ api }: Props) => {
         {keyCount} idempotency {keyCount === 1 ? 'key' : 'keys'}.
       </p>
       <p className="muted">
-        Responses take 700 ms. Reloading resets the store.{' '}
+        Responses take {api.delayMs} ms. Reloading resets the store.{' '}
         <a href="?seed=empty">Start with no cards</a>
       </p>
     </aside>

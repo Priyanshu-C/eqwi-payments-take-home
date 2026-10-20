@@ -5,12 +5,23 @@ import type { AddPaymentMethodInput, PaymentMethod } from '../graphql/types'
 import { addToCachedList } from './cache'
 import { ADD_PAYMENT_METHOD, type AddPaymentMethodData } from './operations'
 
-export type AddState =
+type AddState =
   | { status: 'idle' }
   | { status: 'pending' }
   | { status: 'saved'; method: PaymentMethod }
   | { status: 'rejected'; message: string }
   | { status: 'unknown' }
+
+// Codes the API returns only when it refused the request before saving. Any
+// other failure, including an unexpected server error, might have happened
+// after the write, so it's treated as an unknown outcome.
+const NOT_SAVED_CODES = new Set(['BAD_USER_INPUT', 'PROCESSOR_UNAVAILABLE'])
+
+const wasRejectedBeforeSaving = (
+  error: unknown,
+): error is CombinedGraphQLErrors =>
+  CombinedGraphQLErrors.is(error) &&
+  error.errors.every((e) => NOT_SAVED_CODES.has(String(e.extensions?.code)))
 
 const toState = (
   loading: boolean,
@@ -18,14 +29,9 @@ const toState = (
   data: AddPaymentMethodData | null | undefined,
 ): AddState => {
   if (loading) return { status: 'pending' }
-  // The server answered with an error: by the API's contract nothing was saved.
-  if (CombinedGraphQLErrors.is(error)) {
-    return {
-      status: 'rejected',
-      message: error.errors[0]?.message ?? 'The card was rejected.',
-    }
+  if (wasRejectedBeforeSaving(error)) {
+    return { status: 'rejected', message: error.errors[0].message }
   }
-  // No answer at all, so the card may or may not have been saved.
   if (error) return { status: 'unknown' }
   if (data) return { status: 'saved', method: data.addPaymentMethod }
   return { status: 'idle' }

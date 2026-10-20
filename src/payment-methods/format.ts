@@ -1,4 +1,4 @@
-import type { CardBrand } from '../graphql/types'
+import type { CardBrand, PaymentMethod } from '../graphql/types'
 
 const BRAND_NAMES: Record<CardBrand, string> = {
   VISA: 'Visa',
@@ -6,15 +6,14 @@ const BRAND_NAMES: Record<CardBrand, string> = {
   AMEX: 'American Express',
 }
 
-type Card = {
-  brand: CardBrand
-  last4: string
-  expMonth: number
-  expYear: number
-}
-
-export const cardName = ({ brand, last4 }: Card) =>
+export const cardName = ({
+  brand,
+  last4,
+}: Pick<PaymentMethod, 'brand' | 'last4'>) =>
   `${BRAND_NAMES[brand]} ending ${last4}`
 
-export const expiry = ({ expMonth, expYear }: Card) =>
+export const expiry = ({
+  expMonth,
+  expYear,
+}: Pick<PaymentMethod, 'expMonth' | 'expYear'>) =>
   `${String(expMonth).padStart(2, '0')}/${String(expYear).slice(-2)}`

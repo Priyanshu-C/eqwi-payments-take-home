@@ -1,9 +1,11 @@
 import { useQuery } from '@apollo/client/react'
+import { useId } from 'react'
 import { cardName, expiry } from './format'
 import { PAYMENT_METHODS } from './operations'
 
 export const PaymentMethodList = () => {
   const { data, loading, error, refetch } = useQuery(PAYMENT_METHODS)
+  const headingId = useId()
   const methods = data?.paymentMethods
 
   const renderBody = () => {
@@ -22,7 +24,7 @@ export const PaymentMethodList = () => {
       return <p className="empty">No saved cards yet. Add one below.</p>
     }
     return (
-      <ul className="methods" aria-labelledby="saved-cards-heading">
+      <ul className="methods" aria-labelledby={headingId}>
         {methods.map((method) => (
           <li key={method.id} className="method">
             <span className="method-nickname">{method.nickname}</span>
@@ -35,9 +37,9 @@ export const PaymentMethodList = () => {
   }
 
   return (
-    <section aria-labelledby="saved-cards-heading" aria-busy={loading}>
+    <section aria-labelledby={headingId}>
       <div className="row">
-        <h2 id="saved-cards-heading">Saved cards</h2>
+        <h2 id={headingId}>Saved cards</h2>
         <p role="status" className="status">
           {loading ? 'Loading payment methods…' : ''}
         </p>
