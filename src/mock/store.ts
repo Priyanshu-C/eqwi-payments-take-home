@@ -37,6 +37,7 @@ export type MockStore = ReturnType<typeof createMockStore>
 export const createMockStore = (seed: PaymentMethod[] = SEED_METHODS) => {
   const methods = [...seed]
   const resultsByKey = new Map<string, SavedResult>()
+  const listeners = new Set<() => void>()
   let nextId = methods.length + 1
 
   const add = (input: AddPaymentMethodInput): PaymentMethod => {
@@ -82,13 +83,21 @@ export const createMockStore = (seed: PaymentMethod[] = SEED_METHODS) => {
       nickname: input.nickname,
       method,
     })
+    listeners.forEach((listener) => listener())
     return method
   }
 
   return {
     list: () => [...methods],
     add,
+    count: () => methods.length,
     hasKey: (key: string) => resultsByKey.has(key),
     keyCount: () => resultsByKey.size,
+    subscribe: (listener: () => void) => {
+      listeners.add(listener)
+      return () => {
+        listeners.delete(listener)
+      }
+    },
   }
 }

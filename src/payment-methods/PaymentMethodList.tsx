@@ -36,10 +36,12 @@ export const PaymentMethodList = () => {
 
   return (
     <section aria-labelledby="saved-cards-heading" aria-busy={loading}>
-      <h2 id="saved-cards-heading">Saved cards</h2>
-      <p role="status" className="status">
-        {loading ? 'Loading payment methods…' : ''}
-      </p>
+      <div className="row">
+        <h2 id="saved-cards-heading">Saved cards</h2>
+        <p role="status" className="status">
+          {loading ? 'Loading payment methods…' : ''}
+        </p>
+      </div>
       {renderBody()}
     </section>
   )

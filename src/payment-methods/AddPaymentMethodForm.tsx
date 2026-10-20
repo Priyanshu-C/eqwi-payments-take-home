@@ -137,18 +137,20 @@ export const AddPaymentMethodForm = () => {
           </div>
         )}
 
-        <button type="submit" aria-disabled={pending || undefined}>
-          {pending
-            ? 'Adding…'
-            : state.status === 'unknown'
-              ? 'Retry'
-              : 'Add card'}
-        </button>
-        <p role="status" className="status">
-          {pending && 'Adding card…'}
-          {state.status === 'saved' &&
-            `Added ${state.method.nickname} (${cardName(state.method)}).`}
-        </p>
+        <div className="row">
+          <button type="submit" aria-disabled={pending || undefined}>
+            {pending
+              ? 'Adding…'
+              : state.status === 'unknown'
+                ? 'Retry'
+                : 'Add card'}
+          </button>
+          <p role="status" className="status">
+            {pending && 'Adding card…'}
+            {state.status === 'saved' &&
+              `Added ${state.method.nickname} (${cardName(state.method)}).`}
+          </p>
+        </div>
       </form>
     </section>
   )

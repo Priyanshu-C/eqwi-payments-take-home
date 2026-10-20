@@ -19,7 +19,7 @@ const client = createApolloClient(api.link)
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <App api={api} />
     </ApolloProvider>
   </StrictMode>,
 )
