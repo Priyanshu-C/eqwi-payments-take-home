@@ -88,6 +88,7 @@ export const createMockStore = (seed: PaymentMethod[] = SEED_METHODS) => {
   return {
     list: () => [...methods],
     add,
+    hasKey: (key: string) => resultsByKey.has(key),
     keyCount: () => resultsByKey.size,
   }
 }

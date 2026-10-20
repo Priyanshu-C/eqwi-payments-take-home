@@ -11,10 +11,10 @@ type SentRequest = {
   variables: Record<string, unknown>
 }
 
-// Renders the real screen against the real mock API, with a short delay so
+// The real Apollo client against the real mock API, with a short delay so
 // pending states are still observable. Every request that leaves Apollo is
 // recorded, so tests can check refetches and idempotency keys.
-export const renderScreen = (options: MockApiOptions = {}) => {
+export const createTestClient = (options: MockApiOptions = {}) => {
   const api = createMockApi({ delayMs: 50, ...options })
   const requests: SentRequest[] = []
   const recorder = new ApolloLink((operation, forward) => {
@@ -26,14 +26,20 @@ export const renderScreen = (options: MockApiOptions = {}) => {
   })
   const client = createApolloClient(ApolloLink.from([recorder, api.link]))
 
+  const sent = (operationName: string) =>
+    requests.filter((request) => request.operationName === operationName)
+
+  return { api, client, sent }
+}
+
+export const renderScreen = (options: MockApiOptions = {}) => {
+  const testClient = createTestClient(options)
+
   render(
-    <ApolloProvider client={client}>
+    <ApolloProvider client={testClient.client}>
       <PaymentMethodsScreen />
     </ApolloProvider>,
   )
 
-  const sent = (operationName: string) =>
-    requests.filter((request) => request.operationName === operationName)
-
-  return { api, client, sent, user: userEvent.setup() }
+  return { ...testClient, user: userEvent.setup() }
 }

@@ -34,7 +34,9 @@ export const createMockApi = ({
       return store.list()
     },
     addPaymentMethod: ({ input }: { input: AddPaymentMethodInput }) => {
-      if (current === 'add-rejected') {
+      // A key the server already saved is answered from the stored result, so
+      // only new operations get rejected.
+      if (current === 'add-rejected' && !store.hasKey(input.idempotencyKey)) {
         throw apiError('PROCESSOR_UNAVAILABLE', 'The card processor is down.')
       }
       return store.add(input)
