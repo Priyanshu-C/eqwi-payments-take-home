@@ -42,6 +42,7 @@ src/
   graphql/
     schema.graphql               the schema (also what the mock executes)
     types.ts                     handwritten types matching the schema
+    contract.ts                  card presets and the nickname limit, shared with the mock
     client.ts                    Apollo client and cache
   mock/
     store.ts                     in-memory "server": cards and idempotency records
@@ -58,7 +59,7 @@ src/
     data/
       operations.ts              typed query and mutation (TypedDocumentNode)
       cache.ts                   cache update after a successful add
-    card/                        presets, brand tile, expiry, formatting
+    card/                        brand tile, expiry and card name formatting
   test/renderScreen.tsx          renders the screen against a fresh mock API
 ```
 
@@ -105,11 +106,11 @@ The tests render the real screen against the real mock API and Apollo client. Th
 
 ## Known gaps
 
-- The unresolved attempt lives in a ref inside the form. If the screen unmounts or the page reloads while an add is unresolved, the key is forgotten, and adding the same card again can save a duplicate. A real version would keep the attempt in `sessionStorage` (or the client) and restore the locked form on mount.
+- The unresolved attempt lives in a ref inside the add hook. If the screen unmounts or the page reloads while an add is unresolved, the key is forgotten, and adding the same card again can save a duplicate. A real version would keep the attempt in `sessionStorage` (or the client) and restore the locked form on mount.
 - Retry is manual. There's no automatic retry with backoff, and no way to abandon an unresolved add short of reloading. A "discard" action would need a warning that the card may already be saved.
 - Which error codes mean "nothing was saved" is a contract I made up for the mock. A real API would have to document it.
 - Operation types are handwritten. With more than two operations I'd generate them with GraphQL Code Generator.
-- The presets are a client-side constant that the mock also reads. In a real app the card would come from a tokenization SDK.
+- The presets live in `graphql/contract.ts`, shared by the form and the mock. In a real app the card would come from a tokenization SDK.
 - Idempotency records never expire.
 - The production bundle is over 500 kB because graphql-js ships to the browser to run the mock. A build talking to a real endpoint wouldn't include it.
 - I checked roles, labels and keyboard flow in tests and by hand, but not with a real screen reader.

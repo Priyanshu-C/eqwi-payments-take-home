@@ -21,6 +21,7 @@ body {
 
 h1,
 h2,
+h3,
 p,
 dl,
 dd {
@@ -33,6 +34,7 @@ h2 {
   font-family: var(--font-display);
   font-weight: 600;
   overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 h1 {
@@ -75,9 +77,9 @@ legend {
 .label {
   color: var(--color-muted);
   font-family: var(--font-mono);
-  font-size: var(--text-2xs);
+  font-size: var(--text-xs);
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -100,12 +102,36 @@ legend {
   min-height: 100dvh;
 }
 
+.pane {
+  display: grid;
+  align-content: start;
+  gap: var(--space-sm);
+  min-width: 0;
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sheet);
+}
+
+.pane-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2xs) var(--space-sm);
+}
+
+.pane-head .status {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
 .button-primary,
 .button-secondary {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   padding: 0 var(--space-sm);
   border-radius: var(--radius-control);
   font-size: var(--text-sm);
@@ -139,10 +165,10 @@ legend {
   transform: translateY(1px);
 }
 
+/* Pending, not disabled: it keeps full contrast and the spinner does the talking. */
 .button-primary[aria-disabled='true'] {
   background: var(--color-accent);
   cursor: progress;
-  opacity: 0.75;
   transform: none;
 }
 
@@ -200,7 +226,7 @@ legend {
 }
 
 .chip {
-  padding: 0.125rem 0.375rem;
+  padding: 0 var(--space-3xs);
   border: 1px solid currentColor;
   border-radius: 3px;
   font-family: var(--font-mono);

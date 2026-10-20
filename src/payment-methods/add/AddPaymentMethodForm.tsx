@@ -1,11 +1,10 @@
 import { useId, useRef, useState, type FormEvent } from 'react'
-import { CARD_PRESETS } from '../card/presets'
+import { CARD_PRESETS, NICKNAME_MAX_LENGTH } from '../../graphql/contract'
 import { CardExpiry } from '../card/CardExpiry'
 import { CardMark } from '../card/CardMark'
 import { cardName } from '../card/format'
 import { useAddPaymentMethod } from './useAddPaymentMethod'
 import {
-  NICKNAME_MAX_LENGTH,
   validateAddForm,
   type AddFormErrors,
   type AddFormValues,
@@ -57,19 +56,13 @@ export const AddPaymentMethodForm = () => {
   }
 
   const nicknameLength = values.nickname.trim().length
-  const nicknameDescription = [
-    `${id}-nickname-hint`,
-    errors.nickname && `${id}-nickname-error`,
-  ]
-    .filter(Boolean)
-    .join(' ')
 
   return (
-    <section aria-labelledby={`${id}-heading`} className="pane pane-add">
+    <section aria-labelledby={`${id}-heading`} className="pane">
       <div className="pane-head">
         <h2 id={`${id}-heading`}>Add a card</h2>
       </div>
-      <form onSubmit={handleSubmit} noValidate>
+      <form className="add-form" onSubmit={handleSubmit} noValidate>
         <fieldset ref={cardsRef} className="cards">
           <legend className="label">Card</legend>
           {CARD_PRESETS.map((preset) => (
@@ -110,10 +103,15 @@ export const AddPaymentMethodForm = () => {
             readOnly={locked}
             autoComplete="off"
             aria-invalid={errors.nickname ? true : undefined}
-            aria-describedby={nicknameDescription}
+            aria-describedby={`${id}-nickname-hint`}
           />
-          <p id={`${id}-nickname-hint`} className="hint">
-            Up to {NICKNAME_MAX_LENGTH} characters.{' '}
+          {/* The error takes the hint's place, so showing it doesn't move
+              anything below the field. */}
+          <p
+            id={`${id}-nickname-hint`}
+            className={errors.nickname ? 'hint field-error' : 'hint'}
+          >
+            {errors.nickname ?? `Up to ${NICKNAME_MAX_LENGTH} characters.`}{' '}
             <span
               aria-hidden="true"
               className={
@@ -125,11 +123,6 @@ export const AddPaymentMethodForm = () => {
               {nicknameLength}/{NICKNAME_MAX_LENGTH}
             </span>
           </p>
-          {errors.nickname && (
-            <p id={`${id}-nickname-error`} className="field-error">
-              {errors.nickname}
-            </p>
-          )}
         </div>
 
         {state.status === 'rejected' && (

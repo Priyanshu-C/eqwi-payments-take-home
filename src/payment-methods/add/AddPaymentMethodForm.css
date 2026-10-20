@@ -1,8 +1,4 @@
-.pane-add {
-  background: var(--color-paper-2);
-}
-
-form {
+.add-form {
   display: grid;
   gap: var(--space-md);
 }
@@ -42,15 +38,29 @@ form {
   border-color: var(--color-accent);
 }
 
+.card-option:has(input:focus-visible) {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Locked while an add is unresolved. The chosen card stays fully legible,
+   since that's the one the user needs to check before retrying. */
 .card-option:has(input[aria-disabled='true']) {
   cursor: not-allowed;
-  opacity: 0.65;
+}
+
+.card-option:has(input[aria-disabled='true']:not(:checked)) {
+  opacity: 0.55;
 }
 
 .card-option input {
   grid-area: radio;
   margin: 0;
   accent-color: var(--color-accent);
+}
+
+.card-option input:focus-visible {
+  outline: none;
 }
 
 .card-option .card-mark {
@@ -72,15 +82,16 @@ form {
 }
 
 .field input {
-  padding: 0.625rem var(--space-xs);
+  min-height: 2.75rem;
+  padding: 0 var(--space-xs);
   color: var(--color-ink);
   background: var(--color-surface);
-  border: 1px solid var(--color-rule-2);
+  border: 1px solid var(--color-control-border);
   border-radius: var(--radius-control);
 }
 
 .field input:hover {
-  border-color: var(--color-muted);
+  border-color: var(--color-ink-2);
 }
 
 .field input:focus-visible {
@@ -118,6 +129,10 @@ form {
 .field-error {
   font-size: var(--text-sm);
   font-weight: 500;
+}
+
+.hint.field-error {
+  font-size: var(--text-xs);
 }
 
 .row {

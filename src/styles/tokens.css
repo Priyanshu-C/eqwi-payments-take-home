@@ -8,6 +8,7 @@
   --color-rule: oklch(91% 0.008 255);
   --color-rule-2: oklch(84% 0.012 255);
   --color-skeleton: oklch(94% 0.008 255);
+  --color-control-border: oklch(60% 0.016 257);
 
   --color-accent: oklch(54% 0.2 258);
   --color-accent-hover: oklch(48% 0.2 258);
@@ -48,12 +49,11 @@
   --text-base: 0.9375rem;
   --text-lg: 1.0625rem;
   --text-2xl: clamp(1.75rem, 1.2rem + 2vw, 2.25rem);
-  --text-readout: clamp(2rem, 1.4rem + 2vw, 2.75rem);
+  --text-readout: clamp(1.5rem, 1.2rem + 1vw, 1.75rem);
 
   --radius-control: 6px;
   --radius-sheet: 10px;
   --radius-mark: 4px;
 
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-short: 150ms;
 }

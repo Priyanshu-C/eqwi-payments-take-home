@@ -1,7 +1,6 @@
 import { GraphQLError } from 'graphql'
 import type { AddPaymentMethodInput, PaymentMethod } from '../graphql/types'
-import { NICKNAME_MAX_LENGTH } from '../payment-methods/add/validation'
-import { CARD_PRESETS } from '../payment-methods/card/presets'
+import { CARD_PRESETS, NICKNAME_MAX_LENGTH } from '../graphql/contract'
 
 export const SEED_METHODS: PaymentMethod[] = [
   {

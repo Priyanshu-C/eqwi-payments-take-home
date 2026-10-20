@@ -1,6 +1,4 @@
-import { CARD_PRESETS } from '../card/presets'
-
-export const NICKNAME_MAX_LENGTH = 40
+import { CARD_PRESETS, NICKNAME_MAX_LENGTH } from '../../graphql/contract'
 
 export type AddFormValues = {
   presetId: string

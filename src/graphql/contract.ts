@@ -1,4 +1,8 @@
-import type { CardBrand } from '../../graphql/types'
+// Values the client and the server both rely on, beyond the schema itself.
+
+import type { CardBrand } from './types'
+
+export const NICKNAME_MAX_LENGTH = 40
 
 type CardPreset = {
   id: string

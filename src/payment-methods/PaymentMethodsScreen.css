@@ -17,36 +17,8 @@
 
 .sheet {
   display: grid;
-  overflow: clip;
-  background: var(--color-surface);
-  border: 1px solid var(--color-rule);
-  border-radius: var(--radius-sheet);
-}
-
-.pane {
-  display: grid;
-  align-content: start;
-  gap: var(--space-sm);
-  min-width: 0;
-  padding: var(--space-md);
-}
-
-.pane + .pane {
-  border-top: 1px solid var(--color-rule);
-}
-
-.pane-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-2xs) var(--space-sm);
-}
-
-.pane-head .status {
-  color: var(--color-muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  align-items: start;
+  gap: var(--space-md);
 }
 
 @media (min-width: 52rem) {
@@ -56,10 +28,5 @@
 
   .sheet {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  }
-
-  .pane + .pane {
-    border-top: 0;
-    border-left: 1px solid var(--color-rule);
   }
 }

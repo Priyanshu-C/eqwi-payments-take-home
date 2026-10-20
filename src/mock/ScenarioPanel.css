@@ -64,6 +64,19 @@
   cursor: pointer;
 }
 
+.mock-option:hover {
+  border-color: var(--color-graphite-muted);
+}
+
+.mock-option:has(input:focus-visible) {
+  outline: 2px solid var(--color-graphite-accent);
+  outline-offset: 2px;
+}
+
+.mock-option input:focus-visible {
+  outline: none;
+}
+
 .mock-option:has(input:checked) {
   background: var(--color-graphite-2);
   border-color: var(--color-graphite-accent);
@@ -74,9 +87,15 @@
   accent-color: var(--color-graphite-accent);
 }
 
-.mock-readout {
+.mock-server {
   display: grid;
   grid-area: readout;
+  align-content: start;
+  gap: var(--space-2xs);
+}
+
+.mock-readout {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
   gap: var(--space-2xs);
@@ -89,6 +108,11 @@
   padding: var(--space-sm);
   border: 1px solid var(--color-graphite-rule);
   border-radius: var(--radius-control);
+}
+
+.mock-readout dt {
+  color: var(--color-graphite-muted);
+  font-size: var(--text-sm);
 }
 
 .mock-readout dd {
@@ -112,10 +136,6 @@
       'foot foot';
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     column-gap: var(--space-xl);
-    padding: var(--space-xl) var(--space-lg);
-  }
-
-  .mock-readout {
-    padding-top: calc(var(--text-2xs) * 1.55 + var(--space-2xs));
+    padding: var(--space-lg);
   }
 }

@@ -51,16 +51,24 @@ export const ScenarioPanel = ({ api }: Props) => {
           ))}
         </fieldset>
 
-        <dl className="mock-readout">
-          <div>
-            <dt className="label">Cards on the server</dt>
-            <dd>{savedCount}</dd>
-          </div>
-          <div>
-            <dt className="label">Idempotency keys</dt>
-            <dd>{keyCount}</dd>
-          </div>
-        </dl>
+        <section
+          className="mock-server"
+          aria-labelledby={`${headingId}-server`}
+        >
+          <h3 id={`${headingId}-server`} className="label">
+            Server
+          </h3>
+          <dl className="mock-readout">
+            <div>
+              <dt>Cards saved</dt>
+              <dd>{savedCount}</dd>
+            </div>
+            <div>
+              <dt>Idempotency keys</dt>
+              <dd>{keyCount}</dd>
+            </div>
+          </dl>
+        </section>
 
         <p className="mock-foot">
           Responses take {api.delayMs} ms. Reloading resets the store.{' '}

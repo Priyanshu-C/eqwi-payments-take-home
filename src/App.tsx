@@ -4,7 +4,7 @@ import { PaymentMethodsScreen } from './payment-methods/PaymentMethodsScreen'
 
 type Props = { api: MockApi }
 
-const App = ({ api }: Props) => {
+export const App = ({ api }: Props) => {
   return (
     <div className="app">
       <PaymentMethodsScreen />
@@ -12,5 +12,3 @@ const App = ({ api }: Props) => {
     </div>
   )
 }
-
-export default App
