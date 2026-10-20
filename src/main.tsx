@@ -1,10 +1,25 @@
+import { ApolloProvider } from '@apollo/client/react'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import App from './App'
+import { createApolloClient } from './apolloClient'
+import { createMockApi } from './mock/mockApi'
+import { isScenario } from './mock/scenarios'
 import './index.css'
-import App from './App.tsx'
+
+const params = new URLSearchParams(window.location.search)
+const scenario = params.get('scenario')
+
+const api = createMockApi({
+  scenario: isScenario(scenario) ? scenario : 'normal',
+  seed: params.get('seed') === 'empty' ? [] : undefined,
+})
+const client = createApolloClient(api.link)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </StrictMode>,
 )

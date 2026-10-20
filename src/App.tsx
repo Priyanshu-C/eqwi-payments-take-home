@@ -1,9 +1,7 @@
+import { PaymentMethodsScreen } from './payment-methods/PaymentMethodsScreen'
+
 const App = () => {
-  return (
-    <main>
-      <h1>Payment methods</h1>
-    </main>
-  )
+  return <PaymentMethodsScreen />
 }
 
 export default App

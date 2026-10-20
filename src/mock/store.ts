@@ -29,7 +29,7 @@ type SavedResult = {
   method: PaymentMethod
 }
 
-const apiError = (code: string, message: string) =>
+export const apiError = (code: string, message: string) =>
   new GraphQLError(message, { extensions: { code } })
 
 export type MockStore = ReturnType<typeof createMockStore>
